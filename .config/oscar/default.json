@@ -1,0 +1,30 @@
+{
+    "width": 400,
+    "theme": "default",
+    "items": [
+        {
+            "label": "clock",
+            "type": "output",
+            "class_name": "clock",
+            "interval": 1,
+            "shell": true,
+            "command": "date '+%H:%M:%S'"
+        },
+        {
+            "type": "runner",
+            "class_name": "runner"
+        },
+        {
+            "type": "button",
+            "label": "About",
+            "command": "oscar about"
+        },
+        {
+            "type": "separator"
+        },
+        {
+            "label": "Quit",
+            "class_name": "quit"
+        }
+    ]
+}

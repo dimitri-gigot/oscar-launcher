@@ -1,0 +1,123 @@
+#! /bin/python3
+
+import sys
+
+def main():
+
+    if len(sys.argv) > 1:
+
+        method = sys.argv[1]
+
+        match method:
+            case '--init' |  '-i':
+                start_service()
+
+            case '--open' | '-o':
+                open_window()
+
+            case '--close' | '-c':
+                close_window()
+
+            case '--status' | '-s':
+                show_status()
+
+            case '--stop' | '-x':
+                stop_service()
+
+
+            case '--help' | '-h':
+                display_help()
+
+            case _:
+                display_help()
+    else :
+        display_help()
+
+
+
+def start_service():
+    import gi
+    gi.require_version('Gtk', '4.0')
+    from gi.repository import Gtk
+
+    from modules.app import OscarApp
+
+    app = OscarApp()
+    app.run()
+
+def open_window():
+    try:
+        from modules.dbus import get_client
+        args = sys.argv[1:]
+        
+        name = 'default'
+        if(len(args) > 1):
+            name = args[1]
+
+        # Get the D-Bus interface
+        iface = get_client()
+        response = iface.Open(name)
+        print(response)
+    except Exception as e:
+        error_message(e)
+
+def close_window():
+    try:
+        from modules.dbus import get_client
+        args = sys.argv[1:]
+        
+        name = 'default'
+        if(len(args) > 1):
+            name = args[1]
+
+        # Get the D-Bus interface
+        iface = get_client()
+        response = iface.Close(name)
+        print(response)
+    except Exception as e:
+        error_message(e)
+
+def show_status():
+    try:
+        from modules.dbus import get_client    
+        # Get the D-Bus interface
+        iface = get_client()
+        response = iface.Status()
+        print(response)
+    except Exception as e:
+        error_message(e)
+
+def stop_service():
+    try:
+        from modules.dbus import get_client
+        # Get the D-Bus interface
+        iface = get_client()
+        iface.Stop()
+        print('Service stopped')
+
+    except Exception as e:
+        error_message(e)
+
+def display_help():
+    print('\nUsage: oscar [OPTION]\n')
+    print('Options:\n')
+    print('  -i, --init\t\tStart the service\n')
+    # open take a name parameter --open <name>
+    print('  -o, --open\t\tOpen the window <name>')
+    print('\t\t\tExample: oscar --open <name>')
+    print('\t\t\t<name> is the name of the window to open')
+    print('\t\t\tIf no name is provided, the "default" window is opened\n')
+    print('  -c, --close\t\tClose the window\n')
+    print('  -s, --status\t\tShow the status of the service\n')
+    print('  -x, --stop\t\tStop the service\n')
+    print('  -h, --help\t\tDisplay this help message\n')
+
+def error_message(e):
+    print(e)
+    print('Error: Could not open the window')
+    print('Make sure the service is running: oscar --init')
+
+if __name__ == '__main__':
+    import signal
+    signal.signal(signal.SIGINT, signal.SIG_DFL)
+    main()
