@@ -7,6 +7,27 @@ from gi.repository import GLib
 from gi.repository import Gdk
 
 import subprocess
+import threading
+
+
+class ThreadJob(threading.Thread):
+    def __init__(self, callback, event, interval):
+        threading.Thread.__init__(self)
+        self.callback = callback
+        self.event = event
+        self.interval = interval
+        super(ThreadJob, self).__init__()
+
+    def run(self):
+        while not self.event.wait(self.interval):
+            self.callback()
+
+def set_interval(callback, interval):
+    event = threading.Event()
+    job = ThreadJob(callback, event, interval)
+    job.start()
+    return job
+
 
 def execute_command(command, shell):
     try:
@@ -34,6 +55,7 @@ class OscarWindow(Gtk.ApplicationWindow):
         self.theme = theme
 
         self.shortcuts = []
+        self.timeouts = []
 
         width = 400
         height = 200
@@ -93,6 +115,10 @@ class OscarWindow(Gtk.ApplicationWindow):
         )
 
     def on_close(self, w):
+
+        for t in self.timeouts:
+            t.event.set()
+
         self.app.close(self.config['name'])
 
 
@@ -184,8 +210,11 @@ class OscarWindow(Gtk.ApplicationWindow):
         interval = 0
         if 'interval' in item:
             interval = item['interval']
+       
         if interval > 0:
-            GLib.timeout_add_seconds(interval, on_interval)
+            job = set_interval(on_interval, interval)
+            self.timeouts.append(job)
+
         return output
 
     def create_group(self, item):
