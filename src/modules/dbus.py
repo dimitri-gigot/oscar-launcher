@@ -7,10 +7,10 @@ import signal
 import sys
 
 # Define the D-Bus service name and path
-SERVICE_NAME = 'be.dimdim.oscar'
-SERVICE_PATH = '/be/dimdim/oscar'
+SERVICE_NAME = 'io.github.oscar-launcher'
+SERVICE_PATH = '/io/github/oscar-launcher'
 # Define the D-Bus interface name
-INTERFACE_NAME = 'be.dimdim.oscar'
+INTERFACE_NAME = 'io.github.oscar-launcher'
 
 #
 # CLIENT
@@ -26,8 +26,6 @@ def get_client():
     # Get the D-Bus interface
     iface = dbus.Interface(obj, INTERFACE_NAME)
 
-    print('iface', iface)
-
     return iface
 
 
@@ -36,7 +34,7 @@ def get_client():
 #
 INTERFACE = """
 <node>
-  <interface name="be.dimdim.oscar">
+  <interface name="io.github.oscar-launcher">
     <method name="Open">
       <arg type="s" name="window_name" direction="in"/>
       <arg type="s" name="response" direction="out"/>
@@ -86,9 +84,11 @@ def start_server(event_fn):
     # Create the D-Bus service
     service = OscarDBusService(event_fn)
 
+
     # Start the main loop
     loop = GLib.MainLoop()
     loop.run()
   except Exception as e:
+    print(e)
     print('Error starting dbus server')
     pass

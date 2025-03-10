@@ -33,7 +33,7 @@ class OscarApp(Gtk.Application):
         self.load_config_and_theme()
 
         self.last_open = None
-            
+        print('ok?')
         self.connect("activate", self.on_activate)
 
     def reset_all(self):
@@ -68,6 +68,7 @@ class OscarApp(Gtk.Application):
             
 
     def on_activate(self, app):
+        print('on_activate')
         self.create_windows()
         listen_to_directory([USER_CONFIGS_PATH, USER_THEMES_PATH, DEFAULT_CONFIGS_PATH, DEFAULT_THEMES_PATH], lambda event, path: self.reset_all())
         print('start dbserver')
