@@ -26,7 +26,7 @@ def create_window(app, config, theme):
 
 class OscarApp(Gtk.Application):
     def __init__(self):
-        super().__init__(application_id="org.oscarapp", flags=Gio.ApplicationFlags.FLAGS_NONE)
+        super().__init__(application_id="be.dimdim.oscar", flags=Gio.ApplicationFlags.FLAGS_NONE)
         self.windows = {}
         self.configs = []
         self.themes = []
@@ -70,6 +70,7 @@ class OscarApp(Gtk.Application):
     def on_activate(self, app):
         self.create_windows()
         listen_to_directory([USER_CONFIGS_PATH, USER_THEMES_PATH, DEFAULT_CONFIGS_PATH, DEFAULT_THEMES_PATH], lambda event, path: self.reset_all())
+        print('start dbserver')
         start_server(self.on_dbus_event)
 
     def on_dbus_event(self, event, name):

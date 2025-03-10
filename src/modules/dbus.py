@@ -4,6 +4,7 @@ import dbus.service
 import dbus.mainloop.glib
 from gi.repository import GLib
 import signal
+import sys
 
 # Define the D-Bus service name and path
 SERVICE_NAME = 'be.dimdim.oscar'
@@ -24,6 +25,8 @@ def get_client():
 
     # Get the D-Bus interface
     iface = dbus.Interface(obj, INTERFACE_NAME)
+
+    print('iface', iface)
 
     return iface
 
@@ -72,7 +75,6 @@ class OscarDBusService(dbus.service.Object):
       
     @dbus.service.method(INTERFACE_NAME)
     def Stop(self):
-        print('stup dbus?')
         sys.exit(0)
     
 
@@ -87,5 +89,6 @@ def start_server(event_fn):
     # Start the main loop
     loop = GLib.MainLoop()
     loop.run()
-  except KeyError:
+  except Exception as e:
+    print('Error starting dbus server')
     pass

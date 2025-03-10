@@ -1,6 +1,6 @@
 {
     "width": 400,
-    "theme": "default",
+    "theme": "light",
     "items": [
         {
             "label": "clock",
@@ -16,8 +16,13 @@
         },
         {
             "type": "button",
+            "label": "Readme",
+            "command": "xdg-open https://github.com/dimitri-gigot/oscar-launcher"
+        },
+        {
+            "type": "button",
             "label": "About",
-            "command": "oscar about"
+            "command": "oscar --open about"
         },
         {
             "type": "separator"

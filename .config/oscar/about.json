@@ -1,6 +1,6 @@
 {
     "width": 400,
-    "theme": "default",
+    "theme": "light",
     "items": [
 
         {
@@ -12,10 +12,9 @@
         },
         {
             "label": "about",
-            "type": "output",
+            "type": "text",
             "class_name": "about",
-            "shell": true,
-            "command": "echo '\nOscar is a lightweight, customizable launcher for Linux\nthat offers a fast and minimalist way to execute commands,\nshortcuts, and actions. Built with GTK4, it provides a simple,\nefficient, and modern interface for streamlined productivity.'"
+            "text": "oscar is a simple launcher for linux. It is written in python with Gtk4. It's easy to customize, configure and extend."
         },
         {
             "label": "Quit",

@@ -93,6 +93,10 @@ class OscarWindow(Gtk.ApplicationWindow):
                 i = self.create_group(item)
             elif type == 'runner':
                 i = self.create_runner(item)
+            elif type == 'separator':
+                i = self.create_separator(item)
+            elif type == 'text':
+                i = self.create_text(item)
 
             if i is not None:
                 i.set_cursor_from_name(None)
@@ -157,19 +161,21 @@ class OscarWindow(Gtk.ApplicationWindow):
 
 
     def create_runner(self, item):
-       
-
         runner = Gtk.Entry()
         runner.set_text('')
-
         def on_activate(entry):
             command = runner.get_text()
             if command:
                 execute_command(command, True)
                 self.close()
-
         runner.connect("activate", on_activate)
-
-
-
         return runner
+
+    def create_separator(self, item):
+        separator = Gtk.Separator()
+        return separator
+
+    def create_text(self, item):
+        text = Gtk.Label()
+        text.set_text(item['text'])
+        return text
