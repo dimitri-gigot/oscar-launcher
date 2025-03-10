@@ -14,7 +14,7 @@
             "label": "about",
             "type": "text",
             "class_name": "about",
-            "text": "oscar is a simple launcher for linux. It is written in python with Gtk4. It's easy to customize, configure and extend."
+            "text": "oscar is a simple launcher for linux.\nIt is written in python with Gtk4.\nIt's easy to customize, configure and extend."
         },
         {
             "label": "Quit",

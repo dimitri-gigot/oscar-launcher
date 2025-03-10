@@ -33,7 +33,6 @@ class OscarApp(Gtk.Application):
         self.load_config_and_theme()
 
         self.last_open = None
-        print('ok?')
         self.connect("activate", self.on_activate)
 
     def reset_all(self):
@@ -118,8 +117,8 @@ class OscarApp(Gtk.Application):
 
         if window is None:
             return
-        self.last_open = name        
-        window.present()
+        self.last_open = name
+        window.open_window()
 
     def close(self, name):
         window = self.windows[name] if name in self.windows else None

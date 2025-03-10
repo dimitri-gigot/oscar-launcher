@@ -85,7 +85,6 @@ class OscarWindow(Gtk.ApplicationWindow):
         self.set_child(box)
         self.connect("close-request", self.on_close)
 
-        self.apply_theme()
 
         keycontroller = Gtk.EventControllerKey.new()
         keycontroller.connect("key-pressed", self.on_key_pressed)
@@ -103,6 +102,9 @@ class OscarWindow(Gtk.ApplicationWindow):
                 self.close()
 
 
+    def open_window(self):
+        self.apply_theme()
+        self.present()
     
     def apply_theme(self):
         css = self.theme['css']
