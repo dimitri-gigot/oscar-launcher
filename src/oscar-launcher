@@ -99,12 +99,12 @@ def stop_service():
         error_message(e)
 
 def display_help():
-    print('\nUsage: oscar [OPTION]\n')
+    print('\nUsage: oscar-launcher [OPTION]\n')
     print('Options:\n')
     print('  -i, --init\t\tStart the service\n')
     # open take a name parameter --open <name>
     print('  -o, --open\t\tOpen the window <name>')
-    print('\t\t\tExample: oscar --open <name>')
+    print('\t\t\tExample: oscar-launcher --open <name>')
     print('\t\t\t<name> is the name of the window to open')
     print('\t\t\tIf no name is provided, the "default" window is opened\n')
     print('  -c, --close\t\tClose the window\n')
@@ -115,7 +115,7 @@ def display_help():
 def error_message(e):
     print(e)
     print('Error: Could not open the window')
-    print('Make sure the service is running: oscar --init')
+    print('Make sure the service is running: oscar-launcher --init')
 
 if __name__ == '__main__':
     import signal
