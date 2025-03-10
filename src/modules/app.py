@@ -11,11 +11,11 @@ from modules.configs_change import listen_to_directory
 from modules.window import OscarWindow
 # Constants
 
-USER_CONFIGS_PATH = os.path.expanduser('~/.config/oscar')
-DEFAULT_CONFIGS_PATH = os.path.expanduser('/etc/oscar')
+USER_CONFIGS_PATH = os.path.expanduser('~/.config/oscar-launcher')
+DEFAULT_CONFIGS_PATH = os.path.expanduser('/etc/oscar-launcher')
 
-USER_THEMES_PATH = os.path.expanduser('~/.config/oscar/themes')
-DEFAULT_THEMES_PATH = os.path.expanduser('/etc/oscar/themes')
+USER_THEMES_PATH = os.path.expanduser('~/.config/oscar-launcher/themes')
+DEFAULT_THEMES_PATH = os.path.expanduser('/etc/oscar-launcher/themes')
 
 
 
@@ -26,7 +26,7 @@ def create_window(app, config, theme):
 
 class OscarApp(Gtk.Application):
     def __init__(self):
-        super().__init__(application_id="be.dimdim.oscar", flags=Gio.ApplicationFlags.FLAGS_NONE)
+        super().__init__(application_id="io.github.oscar-launcher", flags=Gio.ApplicationFlags.FLAGS_NONE)
         self.windows = {}
         self.configs = []
         self.themes = []
