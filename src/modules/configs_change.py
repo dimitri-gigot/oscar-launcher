@@ -9,6 +9,9 @@ results = {}
 def listen_to_directory(directory_paths, event_fn):
     
     for directory_path in directory_paths:
+        if not os.path.exists(directory_path):
+            continue
+
         ls_result = os.popen('ls -la ' + directory_path).read()
 
         if directory_path not in results:
