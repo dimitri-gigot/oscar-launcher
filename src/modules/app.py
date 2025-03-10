@@ -59,7 +59,7 @@ class OscarApp(Gtk.Application):
             self.windows[name] = None
 
         # create a window
-        theme_name = config['theme'] if 'theme' in config else 'default'
+        theme_name = config['json']['theme'] if 'theme' in config['json'] else 'default'
         theme = next((t for t in self.themes if t['name'] == theme_name), None)
         self.windows[name] = create_window(self, config, theme)
 
@@ -68,10 +68,8 @@ class OscarApp(Gtk.Application):
             
 
     def on_activate(self, app):
-        print('on_activate')
         self.create_windows()
         listen_to_directory([USER_CONFIGS_PATH, USER_THEMES_PATH, DEFAULT_CONFIGS_PATH, DEFAULT_THEMES_PATH], lambda event, path: self.reset_all())
-        print('start dbserver')
         start_server(self.on_dbus_event)
 
     def on_dbus_event(self, event, name):

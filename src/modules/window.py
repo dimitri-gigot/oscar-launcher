@@ -22,6 +22,9 @@ def get_output_command(command):
     except Exception as e:
         return '-- Error --'
 
+
+
+
 class OscarWindow(Gtk.ApplicationWindow):
     def __init__(self, app, config, theme):
         super().__init__(application=app)
@@ -29,6 +32,8 @@ class OscarWindow(Gtk.ApplicationWindow):
         self.config = config
         self.json = config['json']
         self.theme = theme
+
+        self.shortcuts = []
 
         width = 400
         height = 200
@@ -59,9 +64,25 @@ class OscarWindow(Gtk.ApplicationWindow):
         self.connect("close-request", self.on_close)
 
         self.apply_theme()
+
+        keycontroller = Gtk.EventControllerKey.new()
+        keycontroller.connect("key-pressed", self.on_key_pressed)
+        self.add_controller(keycontroller)
+
+    def on_key_pressed(self, controller, keyval, keycode, state):
+        if keyval == 65307:
+            self.close()
+
+        letter = chr(keyval)
+
+        for shortcut in self.shortcuts:
+            if shortcut['shortcut'] == letter:
+                execute_command(shortcut['command'], True)
+                self.close()
+
+
     
     def apply_theme(self):
-        
         css = self.theme['css']
         provider = Gtk.CssProvider()
         provider.load_from_data(css.encode())
@@ -78,10 +99,19 @@ class OscarWindow(Gtk.ApplicationWindow):
 
     def loop_items(self, items, parent):
         for item in items:
-
             if 'disabled' in item and item['disabled']:
                 continue
-            
+
+            if 'shortcut' in item:
+                short = {
+                    "shortcut": item['shortcut'],
+                    "command": item['command']
+                }
+                
+                exist = next((s for s in self.shortcuts if s['shortcut'] == item['shortcut']), None)
+                if exist is None:
+                    self.shortcuts.append(short)
+
             type = 'button'
             if 'type' in item:
                 type = item['type']
@@ -115,7 +145,15 @@ class OscarWindow(Gtk.ApplicationWindow):
 
     def create_button(self, item):
         button = Gtk.Button()
-        button.set_label(item['label'])
+
+        label = ''
+        if 'label' in item:
+            label = item['label']
+
+        if 'shortcut' in item:
+            label = label + ' (' + item['shortcut'] + ')'
+
+        button.set_label(label)
 
         def on_button_clicked(button):
             command = ''
