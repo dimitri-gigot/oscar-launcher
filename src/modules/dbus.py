@@ -7,10 +7,10 @@ import signal
 import sys
 
 # Define the D-Bus service name and path
-SERVICE_NAME = 'io.github.oscar-launcher'
-SERVICE_PATH = '/io/github/oscar-launcher'
+SERVICE_NAME = 'io.github.oscarlauncher'
+SERVICE_PATH = '/io/github/oscarlauncher'
 # Define the D-Bus interface name
-INTERFACE_NAME = 'io.github.oscar-launcher'
+INTERFACE_NAME = 'io.github.oscarlauncher'
 
 #
 # CLIENT
@@ -34,7 +34,7 @@ def get_client():
 #
 INTERFACE = """
 <node>
-  <interface name="io.github.oscar-launcher">
+  <interface name="io.github.oscarlauncher">
     <method name="Open">
       <arg type="s" name="window_name" direction="in"/>
       <arg type="s" name="response" direction="out"/>
