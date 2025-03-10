@@ -61,6 +61,7 @@ class OscarWindow(Gtk.ApplicationWindow):
         self.apply_theme()
     
     def apply_theme(self):
+        
         css = self.theme['css']
         provider = Gtk.CssProvider()
         provider.load_from_data(css.encode())
