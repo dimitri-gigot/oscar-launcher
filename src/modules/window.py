@@ -87,14 +87,16 @@ class OscarWindow(Gtk.ApplicationWindow):
         self.present()
     
     def apply_theme(self):
-        css = self.theme['css']
-        provider = Gtk.CssProvider()
-        provider.load_from_data(css.encode())
-        Gtk.StyleContext.add_provider_for_display(
-            Gdk.Display.get_default(),
-            provider,
-            Gtk.STYLE_PROVIDER_PRIORITY_USER
-        )
+        if self.app.last_theme_applied is None or self.app.last_theme_applied != self.theme['name']:
+            self.app.last_theme_applied = self.theme['name']
+            css = self.theme['css']
+            provider = Gtk.CssProvider()
+            provider.load_from_data(css.encode())
+            Gtk.StyleContext.add_provider_for_display(
+                Gdk.Display.get_default(),
+                provider,
+                Gtk.STYLE_PROVIDER_PRIORITY_USER
+            )
 
     def on_close(self, w):
 
@@ -204,7 +206,7 @@ class OscarWindow(Gtk.ApplicationWindow):
         orientation = Gtk.Orientation.HORIZONTAL
         if 'orientation' in item:
             if item['orientation'] == 'vertical':
-                orientation = Gtk.Orientation.VERTICAL
+                orientation = Gtk.Orientatifon.VERTICAL
         group.set_orientation(orientation)
         self.loop_items(item['items'], group)
         return group

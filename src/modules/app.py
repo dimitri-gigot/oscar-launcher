@@ -31,12 +31,14 @@ class OscarApp(Gtk.Application):
         self.configs = []
         self.themes = []
         self.load_config_and_theme()
-
+        self.last_theme_applied = None
         self.last_open = None
         self.connect("activate", self.on_activate)
 
     def reset_all(self):
         self.load_config_and_theme()
+        self.last_theme_applied = None
+        self.windows = {}
         self.create_windows()
 
 
@@ -54,8 +56,9 @@ class OscarApp(Gtk.Application):
     def create_window(self, config):
         name = config['name']
         if name in self.windows:
-            self.windows[name].destroy()
-            self.windows[name] = None
+            if self.windows[name] is not None:
+                self.windows[name].destroy()
+                self.windows[name] = None
 
         # create a window
         theme_name = config['json']['theme'] if 'theme' in config['json'] else 'default'
@@ -84,6 +87,9 @@ class OscarApp(Gtk.Application):
                 return 'No window to close'
         elif event == 'status':
             return self.status()
+        elif event == 'stop':
+            os._exit(0)
+            return 
 
     def status(self):
         response = 'Oscar Status\n::::::::::::::::::::::::::::\n'

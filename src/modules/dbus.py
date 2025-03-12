@@ -73,7 +73,8 @@ class OscarDBusService(dbus.service.Object):
       
     @dbus.service.method(INTERFACE_NAME)
     def Stop(self):
-        sys.exit(0)
+        self.event_fn('stop', None)
+        return
     
 
 def start_server(event_fn):

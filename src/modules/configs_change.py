@@ -17,7 +17,7 @@ def listen_to_directory(directory_paths, event_fn):
                 results[directory_path] = ''
                 continue
 
-            ls_result = os.popen('ls -la ' + directory_path).read()
+            ls_result = os.popen('ls -la -R ' + directory_path).read()
 
             if directory_path not in results:
                 results[directory_path] = ls_result
