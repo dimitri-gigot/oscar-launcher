@@ -51,7 +51,8 @@ class OscarApp(Gtk.Application):
     def create_windows(self):
         # create the windows
         for config in self.configs:
-            self.create_window(config)
+            if config is not None:
+                self.create_window(config)
     
     def create_window(self, config):
         name = config['name']

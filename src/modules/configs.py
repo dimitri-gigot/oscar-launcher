@@ -46,7 +46,8 @@ def get_configs(paths):
                 config['json'] = json.loads(text)
             except:
                 print('Error reading config file:', config['path'])
-                config = None
+                config['name'] = config['name'].replace('.json', '')
+                config['json'] = json.loads('{"width": 400,"height": 10,"theme": "light","items": [{"type": "text","text": "Error reading config file"}]}')
 
     # filter out the None values
     configs_final = [c for c in configs if c is not None]

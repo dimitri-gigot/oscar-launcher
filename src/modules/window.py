@@ -207,6 +207,9 @@ class OscarWindow(Gtk.ApplicationWindow):
         if 'orientation' in item:
             if item['orientation'] == 'vertical':
                 orientation = Gtk.Orientatifon.VERTICAL
+            elif item['orientation'] == 'horizontal':
+                orientation = Gtk.Orientation.HORIZONTAL
+
         group.set_orientation(orientation)
         self.loop_items(item['items'], group)
         return group
